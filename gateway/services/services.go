@@ -1,5 +1,1 @@
-package gateway
-
-func RunService() {
-
-}
+package services

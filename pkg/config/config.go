@@ -9,13 +9,14 @@ import (
 )
 
 type Service struct {
-	Name        string   `yaml:"name" env-required:"true"`
-	Baseurl     string   `yaml:"baseUrl" env-required:"true"`
-	Routes      []Route  `yaml:"routes" env-required:"true"`
-	Rate_Limits int      `yaml:"rate_limits" env-required:"true"`
-	Api_Key     string   `yaml:"api_key" env-required:"true"`
-	Allow_List  []string `yaml:"allowlist" env-required:"true"`
-	Enabled     bool     `yaml:"enabled" env-required:"true"`
+	Name             string   `yaml:"name" env-required:"true"`
+	Service_Endpoint string   `yaml:"service_endpoint" env-required:"true"`
+	Baseurl          string   `yaml:"baseUrl" env-required:"true"`
+	Routes           []Route  `yaml:"routes" env-required:"true"`
+	Rate_Limits      int      `yaml:"rate_limits" env-required:"true"`
+	Api_Key          string   `yaml:"api_key" env-required:"true"`
+	Allow_List       []string `yaml:"allowlist" env-required:"true"`
+	Enabled          bool     `yaml:"enabled" env-required:"true"`
 }
 
 type Route struct {

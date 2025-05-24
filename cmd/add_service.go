@@ -87,7 +87,7 @@ func listServices() {
 		fmt.Printf("🚦 Rate Limit   : %d requests/sec\n", i.Rate_Limits)
 		fmt.Printf("📝 Allow List   : %v\n", i.Allow_List)
 		fmt.Printf("✅ Enabled      : %t\n", i.Enabled)
-		fmt.Println("========================================\n")
+		fmt.Println("========================================")
 	}
 
 }

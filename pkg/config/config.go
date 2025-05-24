@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	"github.com/nabhdeep/gateway-cli/constants"
+	"github.com/nabhdeep/gateway-cli/pkg/constants"
 )
 
 type Service struct {

@@ -1,0 +1,4 @@
+env: "dev"
+http_server:
+    address: "localhost:4001"
+services_config_path: "testdata/services_config.yaml"

@@ -3,7 +3,7 @@ package cmd
 import (
 	"log/slog"
 
-	"github.com/nabhdeep/gateway-cli/gateway"
+	"github.com/nabhdeep/gateway-cli/pkg/gateway"
 	"github.com/spf13/cobra"
 )
 

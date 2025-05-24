@@ -1,0 +1,16 @@
+services:
+  - name: user-service
+    baseUrl: http://localhost:5001
+    service_endpoint: /service1
+    routes:
+      - method: "GET "
+        endpoint: /users
+      - method: "GET "
+        endpoint: /users/{id}
+      - method: "POST "
+        endpoint: /users
+    rate_limits: 10
+    api_key: xyc
+    allowlist: 
+      - "192.168.1.5"
+    enabled: true

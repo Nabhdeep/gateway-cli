@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 
-	"github.com/nabhdeep/gateway-cli/constants"
 	"github.com/nabhdeep/gateway-cli/pkg/config"
+	"github.com/nabhdeep/gateway-cli/pkg/constants"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
@@ -22,16 +23,20 @@ func run(c *cobra.Command, args []string) {
 	if len(args) > 0 {
 		configPath = args[0]
 	}
-	isPathTrue := pathValidation(configPath)
+	isPathTrue := PathValidation(configPath)
 	if !isPathTrue {
 		slog.Error("Path does not exist", slog.String("Path", configPath))
 		return
 	}
-	edit_path_in_gateway_config(configPath)
+	err := Edit_path_in_gateway_config(configPath, constants.Gateway_config_path)
+	if err != nil {
+		slog.Error("Unbale to update the path in config file")
+		return
+	}
 	slog.Info("Loading config from", slog.String("Path", configPath))
 }
 
-func pathValidation(p string) bool {
+func PathValidation(p string) bool {
 	if _, err := os.Stat(p); os.IsNotExist(err) {
 		return false
 	}
@@ -40,7 +45,7 @@ func pathValidation(p string) bool {
 
 func Get_Gatewat_server_cofig_path() string {
 	var gateway_config_path string = constants.Gateway_config_path
-	if _path := os.Getenv("GATEWAY_CONFIG_PATH"); len(_path) > 0 && pathValidation(_path) {
+	if _path := os.Getenv("GATEWAY_CONFIG_PATH"); len(_path) > 0 && PathValidation(_path) {
 		gateway_config_path = _path
 	}
 	return gateway_config_path
@@ -48,9 +53,10 @@ func Get_Gatewat_server_cofig_path() string {
 
 func Load_gateWay_config_file(gateway_config_path string) (*config.Config, error) {
 	var gateway_config config.Config
-	if _path := os.Getenv("GATEWAY_CONFIG_PATH"); len(_path) > 0 && pathValidation(_path) {
+	if _path := os.Getenv("GATEWAY_CONFIG_PATH"); len(_path) > 0 && PathValidation(_path) {
 		gateway_config_path = _path
 	}
+
 	yaml_file, err := os.ReadFile(gateway_config_path)
 	if err != nil {
 		slog.Error("Unable to read file from gatway_config ", slog.String("Path", gateway_config_path))
@@ -64,30 +70,31 @@ func Load_gateWay_config_file(gateway_config_path string) (*config.Config, error
 	return &gateway_config, nil
 }
 
-func edit_path_in_gateway_config(p string) {
-	var gateway_config_path string = Get_Gatewat_server_cofig_path()
+func Edit_path_in_gateway_config(p, gateway_config_path string) error {
 
 	gateway_config, err := Load_gateWay_config_file(gateway_config_path)
 	if err != nil {
-		return
+		return err
 	}
 
 	// modfiy srivces path
 	gateway_config.Services_config_path = p
 
 	updated_config, err := yaml.Marshal(gateway_config)
+	fmt.Println(gateway_config)
 
 	if err != nil {
 		slog.Error("Error saving YAML file")
-		return
+		return err
 	}
 
 	err = os.WriteFile(gateway_config_path, updated_config, 0644)
 	if err != nil {
 		slog.Error("Error saving YAML file")
-		return
+		return err
 	}
 	slog.Info("Services path updated successfully")
+	return nil
 }
 
 func init() {

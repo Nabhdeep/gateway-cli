@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	gateway "github.com/nabhdeep/gateway-cli/gateway/proxy"
 	"github.com/nabhdeep/gateway-cli/pkg/config"
+	gateway "github.com/nabhdeep/gateway-cli/pkg/gateway/proxy"
 )
 
 func Inti_API_gateway() {

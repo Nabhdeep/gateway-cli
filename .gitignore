@@ -2,3 +2,4 @@
 gateway-cli
 /logs
 tmp
+debug.test*

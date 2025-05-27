@@ -1,8 +1,13 @@
 package cmd
 
 import (
+	"errors"
+	"fmt"
 	"log/slog"
+	"os"
+	"syscall"
 
+	"github.com/nabhdeep/gateway-cli/pkg/constants"
 	"github.com/nabhdeep/gateway-cli/pkg/gateway"
 	"github.com/spf13/cobra"
 )
@@ -31,6 +36,35 @@ func init() {
 }
 
 func runInBackground() error {
-	slog.Error("TODO")
+	processID, _, err := syscall.Syscall(syscall.SYS_FORK, 0, 0, 0)
+
+	if err != 0 {
+		slog.Error("Error in creatig a syscall to Fork")
+		return errors.New("error in fork")
+	}
+
+	if processID > 0 {
+		// killing the parent process
+		os.Exit(0)
+	}
+	pid, errr := syscall.Setsid()
+	if errr != nil {
+		return errr
+	}
+	file, r := os.Create(constants.Gateway_Pid)
+	if r != nil {
+		return r
+	}
+	defer file.Close()
+
+	_, erro := file.WriteString(fmt.Sprintf("%d", pid))
+	if erro != nil {
+		slog.Error("Unable to create a pid")
+		return erro
+	}
+
+	// starting the process
+	gateway.Inti_API_gateway()
+
 	return nil
 }

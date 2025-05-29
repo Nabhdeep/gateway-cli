@@ -14,7 +14,7 @@ func Inti_API_gateway() {
 	fmt.Println(gateway_config)
 	router := http.NewServeMux()
 	router.HandleFunc("GET /ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("heo"))
+		w.Write([]byte("pong"))
 	})
 	server := http.Server{
 		Addr:    gateway_config.HttpServer.Address,

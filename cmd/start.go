@@ -19,6 +19,10 @@ var startCmd = &cobra.Command{
 	Short: "Starts the gateway server",
 	Long:  `Starts the api gateway server with the loaded config. If config not loaded then API server starts with default configs.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
+		if Check_server_already_exist() {
+			fmt.Println("server is already running")
+			return nil
+		}
 		if daemonize {
 			return runInBackground()
 		}
@@ -67,4 +71,8 @@ func runInBackground() error {
 	gateway.Inti_API_gateway()
 
 	return nil
+}
+func Check_server_already_exist() bool {
+	_, err := os.Stat(constants.Gateway_Pid)
+	return err == nil
 }

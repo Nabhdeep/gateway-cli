@@ -148,8 +148,8 @@ You can modify or extend the gateway functionality by adding middleware to `/gat
 
 Here are some upcoming improvements and considerations for the project:
 
-1. **Service-Specific Middleware**  
-   Separate service proxies to allow applying different middleware stacks for each individual service.
+1. ~~**Service-Specific Middleware**  
+   Separate service proxies to allow applying different middleware stacks for each individual service~~
 
 2. **Reviewing `api_key` Field**  
    The `api_key` field in `services_config.yaml` is currently unused. Will evaluate its purpose; it may be removed or repurposed in future versions.

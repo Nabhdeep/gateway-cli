@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"net"
 	"net/http"
 	"sync"
@@ -37,7 +36,6 @@ func RateLimiterMiddleware(perSecond int) Middleware {
 					}
 				}
 				mu.Unlock()
-				fmt.Println(clients)
 			}
 		}()
 		return func(w http.ResponseWriter, r *http.Request) {

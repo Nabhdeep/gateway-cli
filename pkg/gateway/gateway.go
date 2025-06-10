@@ -23,7 +23,7 @@ func Inti_API_gateway() {
 	slog.Info("API Gateway started on", slog.String("address", gateway_config.HttpServer.Address))
 
 	// Attaching services
-	gateway.RunService(services_config, router)
+	gateway.RunServiceV2(services_config, router)
 
 	err := server.ListenAndServe()
 	if err != nil {

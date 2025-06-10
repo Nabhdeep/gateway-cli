@@ -93,7 +93,8 @@ func RunService(services_config *config.ServicesConfig, router *http.ServeMux) {
 func DefineServiceMiddlewares(resource config.Service) middleware.Chain {
 	switch resource.Service_Endpoint {
 	case "/service1":
-		return middleware.CreateMiddlewareChain(middleware.RateLimiterMiddleware(resource.Rate_Limits))
+		c := middleware.Chain{middleware.Whitelist_ip(resource), middleware.RateLimiterMiddleware(resource.Rate_Limits)}
+		return middleware.CreateMiddlewareChain(c...)
 	default:
 		return middleware.CreateMiddlewareChain(middleware.RateLimiterMiddleware(resource.Rate_Limits))
 	}
@@ -109,6 +110,7 @@ func ProxyRequestHandler(proxy *httputil.ReverseProxy, url *url.URL, endpoint st
 		// slog.Info("Request Received")
 		// slog.Info("", slog.String("Url", r.URL.String()))
 		// slog.Info("=================")
+		fmt.Println(strings.Split(r.RemoteAddr, ":"))
 		r.URL.Host = url.Host
 		r.URL.Scheme = url.Scheme
 		r.Header.Set("X-Forwarded-Host", r.Header.Get("Host"))

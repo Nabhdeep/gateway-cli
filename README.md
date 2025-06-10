@@ -156,7 +156,7 @@ Here are some upcoming improvements and considerations for the project:
 
 3. **Redis-Based Rate Limiter**  
    Replace or enhance the current in-memory rate limiter with a distributed Redis-based implementation for scalability and resilience.
-4. **IP whitelisting per service**
+4. ~~**IP whitelisting per service**~~
 ---
 
 

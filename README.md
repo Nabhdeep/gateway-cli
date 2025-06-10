@@ -10,7 +10,6 @@ Gateway CLI is a lightweight API Gateway tool written in Go. It routes HTTP requ
 
 - 🔀 Request routing to multiple backend services
 - 📄 Configuration via YAML files
-- 🔒 IP allowlisting per service
 - 🚦 Built-in rate limiting
 - 🧩 Middleware support (`/gateway/middleware`)
 - 🛠 CLI utility to manage and start the gateway
@@ -58,9 +57,37 @@ services:
 
 ## 🚀 Usage
 
+## Clone and Build
+1. Clone the repository:
+    ```
+     git clone <repository-url> 
+     cd <repository-dir> 
+    ```
+2. Build the binary:
+    ```
+     go build -o gateway-cli
+    ```
+
+## Setup an Alias
+To make the tool globally accessible:
+
+1. Open `~/.bashrc (or ~/.zshrc if using Zsh)`:
+    ```
+    nano ~/.bashrc
+    ```
+2. Add the following line:
+    ```
+    alias gateway-cli="$HOME/DIR WHERE THE BUILD IS PLACED/gateway-cli" 
+    ```
+3. Refresh your shell configuration:
+    ```
+     . ~/.bashrc
+    ```
+
+
 ### Start the CLI
 ```bash
-go run main.go help
+gatewat-cli help
 ```
 
 ### CLI Commands
@@ -129,6 +156,7 @@ Here are some upcoming improvements and considerations for the project:
 
 3. **Redis-Based Rate Limiter**  
    Replace or enhance the current in-memory rate limiter with a distributed Redis-based implementation for scalability and resilience.
+4. **IP whitelisting per service**
 ---
 
 
